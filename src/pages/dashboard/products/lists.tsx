@@ -1,0 +1,24 @@
+import DashboardLayout from "../../../components/Dashboard/DashboardLayout";
+import Table from "../../../components/Dashboard/Table/Table";
+
+const tableColumns = [
+  { header: "EAN", key: "ean" },
+  { header: "SKU", key: "sku" },
+  { header: "Nombre", key: "name" },
+  { header: "Valor declarado", key: "value" },
+  { header: "Tipo volumen", key: "volumeType" },
+  { header: "Stock físico", key: "physicalStock" },
+  { header: "Ubicación", key: "location" },
+];
+
+export default function ProductsListPage() {
+  const rows: [] = [];
+
+  return (
+    <DashboardLayout title="Productos / Listado">
+      <div className="flex flex-col gap-3">
+        <Table columns={tableColumns} data={rows} />
+      </div>
+    </DashboardLayout>
+  );
+}

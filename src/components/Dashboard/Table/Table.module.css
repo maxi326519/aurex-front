@@ -3,12 +3,13 @@
   border-radius: 5px;
   overflow-y: auto;
   outline: 1px solid var(--border-color);
-  background-color: var(--panel-color);
+  background-color: "white";
 }
 
 .table {
   width: 100%;
   border-radius: 5px;
+  background-color: "white";
 }
 
 /* HEADERS */

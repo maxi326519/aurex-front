@@ -10,7 +10,7 @@ export default function DashboardLayout({ title, children }: Props) {
   return (
     <div className="flex w-screen h-screen">
       <Sidebar />
-      <div className="grow flex flex-col">
+      <div className="grow flex flex-col bg-gray-200">
         <Navbar title={title} />
         <div className="p-5">{children}</div>
       </div>
