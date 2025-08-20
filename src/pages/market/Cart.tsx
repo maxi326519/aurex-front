@@ -22,8 +22,7 @@ export default function Cart() {
     /* TODO: Funcion de cupones */
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function handleSubmit() {
     navigate("/payment");
   }
 
@@ -96,7 +95,7 @@ export default function Cart() {
                 <span className="font-bold">9</span>
               </div>
             </div>
-            <Button type="secondary" onClick={handleSubmit}>
+            <Button type="secondary" onClick={() => handleSubmit()}>
               Realizar Pago
             </Button>
           </div>

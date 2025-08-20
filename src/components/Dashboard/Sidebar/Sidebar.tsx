@@ -260,7 +260,11 @@ export default function Sidebar() {
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>(
     {}
   );
-  const [userRole, setUserRole] = useState("manager"); // Ejemplo: cambiar según autenticación
+  const [userRole, setUserRole] = useState("manager");
+
+  useEffect(() => {
+    setUserRole("manager");
+  }, []);
 
   // Initialize expanded menus based on current path
   useEffect(() => {

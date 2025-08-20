@@ -1,4 +1,6 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+
+import Title from "./Title";
 
 interface HorizontalScrollProps {
   title: string;
@@ -10,9 +12,9 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   children,
 }) => {
   return (
-    <section className="my-8">
+    <section className="w-full max-w-[1200px] m-auto my-8">
       <div className="container mx-auto px-4">
-        <h2 className="text-xl font-bold mb-4">{title}</h2>
+        <Title text={title} className="mb-10" />
         <div className="relative">
           <div className="overflow-x-auto pb-4">
             <div className="flex space-x-4">{children}</div>

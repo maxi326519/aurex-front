@@ -37,17 +37,17 @@ module.exports = {
   		},
   		colors: {
   			primary: {
-  				'500': '#3B82F6',
-  				'800': '#1E3A8A',
-  				'900': '#0A1F3A',
-  				DEFAULT: 'hsl(var(--primary))',
+  				DEFAULT: '#36378b',
+  				'500': '#36378b',
+  				'800': '#282967',
+  				'900': '#141534',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {
-  				'300': '#FCD34D',
-  				'500': '#F59E0B',
-  				'600': '#D97706',
-  				DEFAULT: 'hsl(var(--secondary))',
+  				DEFAULT: '#f0c22e',
+  				'300': '#f0c22e',
+  				'500': '#a5851f',
+  				'600': '#41350c',
   				foreground: 'hsl(var(--secondary-foreground))'
   			},
   			selected: {

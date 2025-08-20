@@ -1,4 +1,3 @@
-import { ReactInput } from "../../interfaces/Types";
 import { useState } from "react";
 
 import Footer from "../../components/Marketplace/Footer";
@@ -77,10 +76,10 @@ const products = [
 export default function Search() {
   const [filters, setFilters] = useState<Partial<SearchFilters>>({}); // TODO: Crear interfaz de los filtros
 
-  function handleChangeFilters(e: ReactInput) {
+  /*   function handleChangeFilters(e: ReactInput) {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
-  }
+  } */
 
   return (
     <div className="flex flex-col min-h-screen h-full">
