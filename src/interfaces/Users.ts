@@ -2,13 +2,22 @@ export interface User {
   id?: string;
   name: string;
   email: string;
+  photo: string;
   rol: UserRol;
+  status: UserStatus;
 }
 
 export enum UserRol {
-  SUPER_ADMIN = "Super Admin",
-  ADMIN = "Admin",
-  CLIENT = "Client",
+  ADMIN = "Administrador",
+  DISPACHER = "Despachador",
+  SELLER = "Vendedor",
+  CLIENT = "Comprador",
+}
+
+export enum UserStatus {
+  WAITING = "En espera",
+  ACTIVE = "Activo",
+  BLOCKED = "Bloqueado",
 }
 
 export interface LoginData {
@@ -24,5 +33,7 @@ export const initLoginData = (): LoginData => ({
 export const initUser = (): User => ({
   name: "",
   email: "",
+  photo: "",
   rol: UserRol.CLIENT,
+  status: UserStatus.WAITING,
 });

@@ -1,28 +1,33 @@
 import { Route, Routes } from "react-router-dom";
+import axios from "axios";
 
-import Home from "./pages/market/index";
-import Login from "./pages/market/login";
-import Search from "./pages/market/search";
-import Cart from "./pages/market/Cart";
+import Home from "./pages/index";
+import Login from "./pages/login";
+import Cart from "./pages/carrito";
+import Search from "./pages/busqueda";
 
-import DashboardPage from "./pages/dashboard";
-import ClientsPage from "./pages/dashboard/clients";
-import ProductsListPage from "./pages/dashboard/products/lists";
-import ProductsCombosPage from "./pages/dashboard/products/combos";
-import ImportsPage from "./pages/dashboard/orders/imports";
-import LocationsPage from "./pages/dashboard/storage/locations";
-import InventarioPage from "./pages/dashboard/storage/inventory";
-import AppointmentsPage from "./pages/dashboard/receptions/appointments";
-import IngressPage from "./pages/dashboard/receptions/ingress";
-import FollowUpPage from "./pages/dashboard/receptions/follouUp";
-import PendingPage from "./pages/dashboard/orders/pending";
-import InProcessPage from "./pages/dashboard/orders/inProcess";
-import PreparedPage from "./pages/dashboard/orders/prepared";
-import MarketPostsPage from "./pages/dashboard/market/posts";
-import AnaliticsPage from "./pages/dashboard/market/analitics";
-import UsersPage from "./pages/dashboard/users";
+import DashboardPage from "./pages/panel/admin";
+import UsersPage from "./pages/panel/admin/users";
+import SellersPage from "./pages/panel/admin/sellers";
+import ProductsListPage from "./pages/panel/admin/products/lists";
+import OrdersPage from "./pages/panel/admin/orders";
+import ProductsImportsPage from "./pages/panel/admin/products/imports";
+import LocationsPage from "./pages/panel/admin/storage/locations";
+import InventarioPage from "./pages/panel/admin/storage/inventory";
+import ReceptionsPage from "./pages/panel/admin/receptions";
+import ClientsOrdersPage from "./pages/panel/compras";
+
+import SellerProfilePage from "./pages/panel/vendedores/perfil";
+import SellerAnaliticsPage from "./pages/panel/vendedores/analitics";
+import SellersProductsPage from "./pages/panel/vendedores/products/listado";
+import SellersProductsCombosPage from "./pages/panel/vendedores/market/combos";
+import SellersNewProductsPage from "./pages/panel/vendedores/products/alta-manual";
+import SellerOrdersPage from "./pages/panel/vendedores/market/orders";
 
 import "./App.css";
+import SellersPostsPage from "./pages/panel/vendedores/market/publicaciones";
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
 function App() {
   return (
@@ -30,28 +35,33 @@ function App() {
       <Routes>
         {/* E-Commerce */}
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/busqueda" element={<Search />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cart" element={<Cart />} />
 
         {/* Dashbpoard Admin */}
-        <Route path={"/panel/metricas"} element={<DashboardPage/>} />
-        <Route path={"/panel/clientes"} element={<ClientsPage/>} />
-        <Route path={"/panel/productos/listado"} element={<ProductsListPage/>} />
-        <Route path={"/panel/productos/combos"} element={<ProductsCombosPage/>} />
-        <Route path={"/panel/productos/importacion"} element={<ImportsPage/>} />
-        <Route path={"/panel/almacen/ubicaciones"} element={<LocationsPage/>} />
-        <Route path={"/panel/almacen/inventario"} element={<InventarioPage/>} />
-        <Route path={"/panel/recepciones/turnos"} element={<AppointmentsPage/>} />
-        <Route path={"/panel/recepciones/ingresos"} element={<IngressPage/>} />
-        <Route path={"/panel/recepciones/seguimiento"} element={<FollowUpPage/>} />
-        <Route path={"/panel/pedidos/pendientes"} element={<PendingPage/>} />
-        <Route path={"/panel/pedidos/proceso"} element={<InProcessPage/>} />
-        <Route path={"/panel/pedidos/preparados"} element={<PreparedPage/>} />
-        <Route path={"/panel/pedidos/importacion"} element={<ImportsPage/>} />
-        <Route path={"/panel/marketplace/publicaciones"} element={<MarketPostsPage/>} />
-        <Route path={"/panel/marketplace/estadisticas"} element={<AnaliticsPage/>} />
-        <Route path={"/panel/usuarios"} element={<UsersPage/>} />
+        <Route path={"/panel/admin/analiticas"} element={<DashboardPage/>} />
+        <Route path={"/panel/admin/usuarios"} element={<UsersPage/>} />
+        <Route path={"/panel/admin/vendedores"} element={<SellersPage/>} />
+        <Route path={"/panel/admin/productos/listado"} element={<ProductsListPage/>} />
+        <Route path={"/panel/admin/productos/importacion"} element={<ProductsImportsPage/>} />
+        <Route path={"/panel/admin/almacen/ubicaciones"} element={<LocationsPage/>} />
+        <Route path={"/panel/admin/almacen/inventario"} element={<InventarioPage/>} />
+        <Route path={"/panel/admin/pedidos"} element={<OrdersPage/>} />
+        <Route path={"/panel/admin/recepciones"} element={<ReceptionsPage/>} />
+
+        {/* Dashboard Sellers */}
+        <Route path={"/panel/vendedor/analiticas"} element={<SellerAnaliticsPage/>} />
+        <Route path={"/panel/vendedor/perfil"} element={<SellerProfilePage/>} />
+        <Route path={"/panel/vendedor/tienda/publicaciones"} element={<SellersPostsPage />}/>
+        <Route path={"/panel/vendedor/tienda/combos"} element={<SellersProductsCombosPage/>}/>
+        <Route path={"/panel/vendedor/tienda/alta-rapida"} element={<SellersProductsCombosPage/>}/>
+        <Route path={"/panel/vendedor/productos/listado"} element={<SellersProductsPage/>}/>
+        <Route path={"/panel/vendedor/productos/alta-manual"} element={<SellersNewProductsPage />}/>
+        <Route path={"/panel/vendedor/ventas/pedidos"} element={<SellerOrdersPage/>}/>
+
+        {/* Dashbaord Clients */}
+        <Route path={"/panel/compras"} element={<ClientsOrdersPage />} />
 
       </Routes>
     </div>

@@ -31,4 +31,3 @@ export const initMovementFilter = (): MovementFilter => ({
   date: "",
   concesionarioId: "",
 });
-

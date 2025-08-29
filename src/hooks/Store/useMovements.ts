@@ -1,7 +1,7 @@
 import { StoreState } from "../../interfaces/StoreState";
 import { Movement } from "../../interfaces/Movement";
 import { useStore } from "./useStore";
-import { useAuth } from "../useAuth";
+import { useAuth } from "../Auth/useAuth";
 import useLoading from "./useLoading";
 
 interface UseMovements {
@@ -13,11 +13,11 @@ interface UseMovements {
 }
 
 export default function useMovements(): UseMovements {
-  const { sesion } = useAuth();
+  const auth = useAuth();
   const { store, setStore } = useStore();
   const loading = useLoading();
 
-  console.log(sesion);
+  console.log(auth);
 
   // Add a new Movement
   async function setMovements(movement: Movement): Promise<StoreState> {
@@ -37,7 +37,7 @@ export default function useMovements(): UseMovements {
       if (itemSell) {
         const mercUpdated = {
           ...merc,
-          quantity: merc.quantity - itemSell.quantity,
+          quantity: merc.totalStock - itemSell.quantity,
         }; // Update local data
         return mercUpdated;
       } else return merc;

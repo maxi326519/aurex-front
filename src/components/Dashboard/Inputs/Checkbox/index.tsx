@@ -23,7 +23,7 @@ export default function Checkbox({
         <input
           id={name}
           name={name}
-          className="form-check-input"
+          className="mr-1 form-check-input"
           type="checkbox"
           checked={value}
           onChange={onCheck}

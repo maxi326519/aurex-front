@@ -3,6 +3,7 @@ import Filters, { FilterConfig } from "../Filters/Filters";
 
 import styles from "./Controls.module.css";
 import searchSvg from "../../../assets/svg/dashboard/search.svg";
+import Button from "../../ui/Button";
 
 export type BtnConfig = Array<{
   label: string;
@@ -54,9 +55,13 @@ export default function Controls<T>({
       {btnConfig && (
         <div className={styles.btnContainer}>
           {btnConfig.map((btn) => (
-            <button className="btn-primary" onClick={btn.onClick}>
+            <Button
+              type="primary"
+              className="btn-primary"
+              onClick={btn.onClick}
+            >
               {btn.label}
-            </button>
+            </Button>
           ))}
         </div>
       )}

@@ -4,7 +4,8 @@ interface Props {
   children: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
-  onClick: () => void;
+  submit?: boolean;
+  onClick?: () => void;
 }
 
 export default function Button({
@@ -13,10 +14,11 @@ export default function Button({
   children,
   className,
   style,
+  submit,
   onClick,
 }: Props) {
   const baseStyles = "flex justify-center gap-4 px-4 py-2 rounded-lg border";
-  
+
   const solidStyles =
     type === "primary"
       ? "bg-primary text-white border-primary"
@@ -29,6 +31,7 @@ export default function Button({
 
   return (
     <button
+      type={submit ? "submit" : "button"}
       className={`${baseStyles} ${
         variant === "outline" ? outlineStyles : solidStyles
       } ${className}`}

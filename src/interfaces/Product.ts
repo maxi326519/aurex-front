@@ -1,76 +1,58 @@
+import { Storage } from "./Storage";
+
 export interface Product {
   id?: string;
+  ean: string;
+  sku: string;
   name: string;
   description: string;
-  img: string;
-  type: ProductType;
-  quantity: number;
-  buyPrice: number;
-  sellPrice: number;
-  profit: number;
-  state: ProductState;
-  data?: ProductData;
+  price: number;
+  volumeType: number;
+  weight: number;
+  category1: string;
+  category2: string;
+  totalStock: number;
+  status: ProductStatus;
 }
 
-export interface ProductSell extends Product {
-  total: number,
-  quantitySell: number;
+export enum ProductStatus {
+  PUBLISHED = "Publicado",
+  HIDDEN = "Oculto",
+  EMPTY = "Sin stock",
 }
 
-export type ProductData =
-  | RectangularProduct
-  | RoundProduct
-  | FoldeProduct
-  | AnchorProduct;
-
-export enum ProductState {
-  AVAILABLE = "Disponible",
-  UNAVAILABLE = "Unavaibale",
+export interface Category {
+  id: string;
+  name: string;
 }
 
-export enum ProductType {
-  RECTANGULAR = "Rectangular",
-  CIRCULAR = "Circular",
-  PLEGADO = "Plegado",
-  ANCLAJE = "Anclaje",
-}
-
-export interface RectangularProduct {
-  firstSide: number;
-  secondSide: number;
-  thickness: number;
-  holes: number;
-}
-
-export interface RoundProduct {
-  diameter: number;
-  thickness: number;
-  holes: number;
-}
-
-export interface FoldeProduct {
-  holes: number;
-  base: number;
-  leftSide: number;
-  rightSide: number;
-  numberOfFolds: number;
-  large: number;
-  thickness: number;
-}
-
-export interface AnchorProduct {
-  metric: number;
-  large: number;
+export interface Stock {
+  id?: string;
+  amount: number;
+  enabled: number; // Stock available in market
+  isFull: boolean;
+  ProductId?: string;
+  StorageId?: string;
+  product?: Partial<Product>;
+  storage?: Partial<Storage>;
 }
 
 export const initProduct = (): Product => ({
+  ean: "",
+  sku: "",
   name: "",
   description: "",
-  img: "",
-  type: ProductType.RECTANGULAR,
-  quantity: 0,
-  buyPrice: 0,
-  sellPrice: 0,
-  profit: 40,
-  state: ProductState.AVAILABLE,
+  price: 0,
+  volumeType: 0,
+  weight: 0,
+  category1: "",
+  category2: "",
+  totalStock: 0,
+  status: ProductStatus.HIDDEN,
+});
+
+export const initStock = (): Stock => ({
+  amount: 0,
+  enabled: 0,
+  isFull: true,
 });

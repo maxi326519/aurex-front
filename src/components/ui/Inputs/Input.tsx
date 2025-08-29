@@ -30,16 +30,19 @@ export default function Input({
   onChange,
 }: InputProps) {
   return (
-    <div className="flex rounded-lg bg-white overflow-hidden">
+    <div className="relative flex flex-col overflow-hidden">
       {label && (
-        <label htmlFor={name} className="form-label">
+        <label
+          htmlFor={name}
+          className="absolute top-1 left-2 text-xs text-gray-500 font-medium"
+        >
           {label}
         </label>
       )}
       <input
         id={name}
         name={name}
-        className="flex-grow text-black p-2"
+        className="text-black p-2 pt-5 focus:outline-none rounded-lg border border-gray-200 bg-white"
         style={disabled ? { backgroundColor: "#ddd" } : {}}
         value={value}
         type={type}

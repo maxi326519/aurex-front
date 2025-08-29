@@ -1,7 +1,7 @@
 import { initMovement, Movement } from "../../interfaces/Movement";
 import { useStore } from "./useStore";
 import { Product } from "../../interfaces/Product";
-import { useAuth } from "../useAuth";
+import { useAuth } from "../Auth/useAuth";
 import useLoading from "./useLoading";
 import useMovements from "./useMovements";
 import Swal from "sweetalert2";
@@ -20,12 +20,12 @@ export default function useCarrito(): UseCarrito {
   const loading = useLoading();
   const movement = useMovements();
   const { store, setStore } = useStore();
-  const { sesion } = useAuth();
+  const auth = useAuth();
 
-  console.log(sesion);
+  console.log(auth);
 
   function addItem(products: Product): void {
-    if (products.quantity > 1) {
+    if (products.totalStock > 1) {
       // Add item
       const updatedItems = [...store.cart.items, products];
 
