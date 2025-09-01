@@ -34,7 +34,7 @@ const Header = () => {
   }
 
   function handleSubmit() {
-    navigate("/search");
+    navigate("/busqueda");
   }
 
   function handleSetLocation() {

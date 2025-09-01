@@ -1,28 +1,23 @@
-import { Product } from "./Product";
-import { Post } from "./Posts";
-
 export interface Order {
-  id?: string;
+  id: string;
   date: Date;
   status: OrdersStatus;
-  clicks: number;
-  totalPrice: string;
-  UserId?: string;
+  quantity: number;
+  totalAmount: number;
+  items?: OrderItem[];
 }
 
 export interface OrderItem {
-  id?: string;
-  amount: number;
-  unitPrice: number;
-  totalPrice: number;
-  orderId: string;
-  productId: string;
-  product?: Product;
-  post?: Post;
+  id: string;
+  quantity: number;
+  price: number;
+  productId?: string;
+  orderId?: string;
 }
 
 export enum OrdersStatus {
-  PENDING = "pending",
-  COMPLETED = "completed",
-  CANCELED = "canceled",
+  PENDING = "Pendiente",
+  PREPARED = "Preparado",
+  COMPLETED = "Completado",
+  CANCELED = "Cancelado",
 }

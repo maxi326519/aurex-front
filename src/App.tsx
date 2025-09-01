@@ -14,8 +14,6 @@ import OrdersPage from "./pages/panel/admin/orders";
 import ProductsImportsPage from "./pages/panel/admin/products/imports";
 import LocationsPage from "./pages/panel/admin/storage/locations";
 import InventarioPage from "./pages/panel/admin/storage/inventory";
-import ReceptionsPage from "./pages/panel/admin/receptions";
-import ClientsOrdersPage from "./pages/panel/compras";
 
 import SellerProfilePage from "./pages/panel/vendedores/perfil";
 import SellerAnaliticsPage from "./pages/panel/vendedores/analitics";
@@ -23,9 +21,18 @@ import SellersProductsPage from "./pages/panel/vendedores/products/listado";
 import SellersProductsCombosPage from "./pages/panel/vendedores/market/combos";
 import SellersNewProductsPage from "./pages/panel/vendedores/products/alta-manual";
 import SellerOrdersPage from "./pages/panel/vendedores/market/orders";
+import SellersPostsPage from "./pages/panel/vendedores/market/publicaciones";
+import SellersNewPostPage from "./pages/panel/vendedores/market/alta-rapida";
+
+import SellersImportsPage from "./pages/panel/vendedores/products/imports";
+import ReceptionsPendingPage from "./pages/panel/admin/recepciones/pendientes";
+
+import ClientsOrdersPage from "./pages/panel/compras";
 
 import "./App.css";
-import SellersPostsPage from "./pages/panel/vendedores/market/publicaciones";
+import ReceptionsApproved from "./pages/panel/admin/recepciones/aprobados";
+import ReceptionsHistory from "./pages/panel/admin/recepciones/historial";
+import ReceptionsPending from "./pages/panel/admin/recepciones/pendientes";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
@@ -48,16 +55,27 @@ function App() {
         <Route path={"/panel/admin/almacen/ubicaciones"} element={<LocationsPage/>} />
         <Route path={"/panel/admin/almacen/inventario"} element={<InventarioPage/>} />
         <Route path={"/panel/admin/pedidos"} element={<OrdersPage/>} />
-        <Route path={"/panel/admin/recepciones"} element={<ReceptionsPage/>} />
+
+        <Route path={"/panel/admin/recepciones/pendientes"} element={<ReceptionsPending/>}/>
+        <Route path={"/panel/admin/recepciones/aprobados"} element={<ReceptionsApproved/>}/>
+        <Route path={"/panel/admin/recepciones/historial"} element={<ReceptionsHistory/>}/>
 
         {/* Dashboard Sellers */}
         <Route path={"/panel/vendedor/analiticas"} element={<SellerAnaliticsPage/>} />
         <Route path={"/panel/vendedor/perfil"} element={<SellerProfilePage/>} />
+
+        <Route path={"/panel/vendedor/inventario/productos"} element={<SellersProductsPage/>}/>
+        <Route path={"/panel/vendedor/inventario/nuevo-producto"} element={<SellersNewProductsPage />}/>
+
+        <Route path={"/panel/vendedor/productos/importacion"} element={<SellersImportsPage/>} />
+
         <Route path={"/panel/vendedor/tienda/publicaciones"} element={<SellersPostsPage />}/>
         <Route path={"/panel/vendedor/tienda/combos"} element={<SellersProductsCombosPage/>}/>
-        <Route path={"/panel/vendedor/tienda/alta-rapida"} element={<SellersProductsCombosPage/>}/>
-        <Route path={"/panel/vendedor/productos/listado"} element={<SellersProductsPage/>}/>
-        <Route path={"/panel/vendedor/productos/alta-manual"} element={<SellersNewProductsPage />}/>
+        <Route path={"/panel/vendedor/tienda/alta-rapida"} element={<SellersNewPostPage/>}/>
+
+
+
+        
         <Route path={"/panel/vendedor/ventas/pedidos"} element={<SellerOrdersPage/>}/>
 
         {/* Dashbaord Clients */}

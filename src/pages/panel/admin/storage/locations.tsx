@@ -4,12 +4,9 @@ import DashboardLayout from "../../../../components/Dashboard/AdminDashboard";
 import Table from "../../../../components/Dashboard/Table/Table";
 
 const tableColumns = [
-  { header: "ID Posición", key: "id" },
-  {
-    header: "Dimensiones (cm)",
-    key: "",
-    render: (row: Storage) => <span>{row.height * row.width} m²</span>,
-  },
+  { header: "Rag", key: "rag" },
+  { header: "Frente", key: "front" },
+  { header: "Posición", key: "position" },
   { header: "Capacidad Actual", key: "currentCapacity" },
   { header: "Capacidad estimada", key: "estimatedCapacity" },
   { header: "Cantidad permitida", key: "allowedQuantity" },
@@ -40,9 +37,12 @@ const tableColumns = [
 ];
 
 export default function LocationsPage() {
-  const rows: Storage[] = [
+  const rows: any[] = [
     {
       id: "A1",
+      rag: "RA",
+      front: "A1",
+      position: "1",
       name: "Almacén Central",
       height: 200,
       width: 100,
@@ -53,6 +53,9 @@ export default function LocationsPage() {
     },
     {
       id: "B2",
+      rag: "RB",
+      front: "B1",
+      position: "3",
       name: "Almacén Secundario",
       height: 180,
       width: 120,

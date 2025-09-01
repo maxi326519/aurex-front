@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import usePosts from "../../../../hooks/Dashboard/posts/usePosts";
+
 import DashboardLayout from "../../../../components/Dashboard/SellerDashboard";
 import Table from "../../../../components/Dashboard/Table/Table";
 
@@ -14,12 +17,20 @@ const tableColumns = [
 ];
 
 export default function SellersPostsPage() {
-  const rows: [] = [];
+  const posts = usePosts();
+
+  useEffect(() => {
+    posts.get();
+  }, []);
+
+  useEffect(() => {
+    console.log("Publicaciones", posts.data);
+  }, [posts.data]);
 
   return (
     <DashboardLayout title="Tienda / Publicaciones">
       <div className="flex flex-col gap-3">
-        <Table columns={tableColumns} data={rows} />
+        <Table columns={tableColumns} data={posts.data} />
       </div>
     </DashboardLayout>
   );

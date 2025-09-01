@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 import Table from "../Dashboard/Table/Table";
 import Separator from "../Separator";
+import Button from "../ui/Button";
 
 const tableColumns = [
   { header: "SKU", key: "sku", reder: (row: Product) => <b>{row.sku}</b> },
@@ -79,6 +80,7 @@ export default function ImportProducts({
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
+  const [remito, setRemito] = useState<File | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -265,7 +267,7 @@ export default function ImportProducts({
       ) : products.length > 0 ? (
         <div className="space-y-4">
           <div className="flex gap-4">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 m-auto">
               <h3 className="font-semibold text-green-800 mb-2">
                 ¡Archivo procesado correctamente!
               </h3>
@@ -273,30 +275,6 @@ export default function ImportProducts({
                 Se encontraron <strong>{products.length}</strong> productos para
                 importar.
               </p>
-              <p className="text-sm text-green-600 mt-1">
-                Formato detectado: EAN | SKU | Producto | Categoria 1 |
-                Categoria 2 | Valor declarado | Tipo de volumen
-              </p>
-            </div>
-
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-800 mb-2">
-                Notas de importación:
-              </h4>
-              <ul className="text-sm text-blue-700 list-disc list-inside space-y-1">
-                <li>
-                  Los campos "Descripción", "Peso" y "Stock" se establecerán con
-                  valores predeterminados
-                </li>
-                <li>
-                  El estado del producto se establecerá como "Activo" por
-                  defecto
-                </li>
-                <li>
-                  Los tipos de volumen se mapean automáticamente (Chico=1,
-                  Mediano=2, Grande=3)
-                </li>
-              </ul>
             </div>
           </div>
           <div className="flex justify-center gap-4 pt-4">
@@ -306,13 +284,17 @@ export default function ImportProducts({
             >
               Cancelar
             </button>
-            <button
-              className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
-              onClick={handleSubmit}
-              disabled={loading}
-            >
-              {loading ? "Importando..." : "Confirmar Importación"}
-            </button>
+            {remito ? (
+              <button
+                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? "Importando..." : "Confirmar Importación"}
+              </button>
+            ) : (
+              <Button type="primary">Submir remito</Button>
+            )}
           </div>
           <Separator />
 

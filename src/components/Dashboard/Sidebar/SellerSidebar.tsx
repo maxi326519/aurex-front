@@ -10,6 +10,7 @@ import {
   TrendingUp,
   PackageSearch,
   Layers,
+  FileInput,
 } from "lucide-react";
 
 const sections: SideSection[] = [
@@ -25,6 +26,33 @@ const sections: SideSection[] = [
         icon: <User size={20} />,
         path: "/panel/vendedor/perfil",
         name: "Perfil",
+      },
+    ],
+  },
+  {
+    title: "Inventario",
+    items: [
+      {
+        icon: <PackageSearch size={20} />,
+        path: "/panel/vendedor/inventario",
+        name: "Gestión de Inventario",
+        sublist: [
+          {
+            icon: <Layers size={18} />,
+            path: "/panel/vendedor/inventario/productos",
+            name: "Todos los Productos",
+          },
+          {
+            icon: <FileInput size={18} />,
+            path: "/panel/vendedor/productos/importacion",
+            name: "Ingreso Full",
+          },
+          {
+            icon: <FilePlus2 size={18} />,
+            path: "/panel/vendedor/inventario/nuevo-producto",
+            name: "Agregar Producto",
+          },
+        ],
       },
     ],
   },
@@ -63,52 +91,13 @@ const sections: SideSection[] = [
             path: "/panel/vendedor/ventas/pedidos",
             name: "Pedidos",
           },
-          {
+          /*           {
             icon: <BarChart3 size={18} />,
             path: "/panel/vendedor/ventas/estadisticas",
             name: "Estadísticas",
-          },
+          }, */
         ],
       },
-    ],
-  },
-  {
-    title: "Inventario",
-    items: [
-      {
-        icon: <PackageSearch size={20} />,
-        path: "/panel/vendedor/inventario",
-        name: "Gestión de Inventario",
-        sublist: [
-          {
-            icon: <Layers size={18} />,
-            path: "/panel/vendedor/inventario/productos",
-            name: "Todos los Productos",
-          },
-          {
-            icon: <FilePlus2 size={18} />,
-            path: "/panel/vendedor/inventario/nuevo",
-            name: "Agregar Producto",
-          },
-        ],
-      },
-      /*       {
-        icon: <Package size={20} />,
-        path: "/panel/vendedor/stock",
-        name: "Control de Stock",
-        sublist: [
-          {
-            icon: <ClipboardList size={18} />,
-            path: "/panel/vendedor/stock/alertas",
-            name: "Alertas de Stock",
-          },
-          {
-            icon: <BarChart3 size={18} />,
-            path: "/panel/vendedor/stock/historico",
-            name: "Histórico",
-          },
-        ],
-      }, */
     ],
   },
   /*   {

@@ -4,13 +4,18 @@ import {
   Users,
   Package,
   Warehouse,
-  ClipboardList,
   ShoppingCart,
   UserCog,
   List,
   FileInput,
   MapPin,
   PackagePlus,
+  Clock,
+  Truck,
+  CheckCircle2,
+  Loader,
+  History,
+  PackageCheck,
 } from "lucide-react";
 
 const sections: SideSection[] = [
@@ -82,14 +87,48 @@ const sections: SideSection[] = [
     title: "Operaciones",
     items: [
       {
+        icon: <Package size={20} />,
+        path: "/panel/admin/recepciones",
+        name: "Recepciones",
+        sublist: [
+          {
+            icon: <Clock size={20} />,
+            path: "/panel/admin/recepciones/pendientes",
+            name: "Pendientes",
+          },
+          {
+            icon: <PackageCheck size={20} />,
+            path: "/panel/admin/recepciones/aprobados",
+            name: "Aprobados",
+          },
+          {
+            icon: <History size={20} />,
+            path: "/panel/admin/recepciones/historial",
+            name: "Historial",
+          },
+        ],
+      },
+      {
         icon: <ShoppingCart size={20} />,
         path: "/panel/admin/pedidos",
         name: "Pedidos",
-      },
-      {
-        icon: <ClipboardList size={20} />,
-        path: "/panel/admin/recepciones",
-        name: "Recepciones",
+        sublist: [
+          {
+            icon: <Clock size={20} />,
+            path: "/panel/admin/pedidos/pendientes",
+            name: "Pendientes",
+          },
+          {
+            icon: <Truck size={20} />,
+            path: "/panel/admin/pedidos/en-proceso",
+            name: "En proceso",
+          },
+          {
+            icon: <CheckCircle2 size={20} />,
+            path: "/panel/admin/pedidos/entregados",
+            name: "Entregados",
+          },
+        ],
       },
     ],
   },

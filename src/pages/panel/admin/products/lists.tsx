@@ -1,8 +1,7 @@
-import { Eye, EyeOff, Pencil, Trash2 } from "lucide-react";
 import { Product, ProductStatus, Stock } from "../../../../interfaces/Product";
-import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { User } from "../../vendedores/perfil";
+import { useNavigate } from "react-router-dom";
 import useProducts from "../../../../hooks/Dashboard/products/useProduct";
 
 import DashboardLayout from "../../../../components/Dashboard/AdminDashboard";
@@ -54,7 +53,6 @@ const tableColumns = (
       </div>
     ),
   },
-
   {
     header: "Estado",
     key: "status",
