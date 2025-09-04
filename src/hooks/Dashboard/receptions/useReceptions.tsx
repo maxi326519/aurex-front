@@ -6,21 +6,34 @@ import Swal from "sweetalert2";
 export interface UseReceptions {
   pendings: {
     data: Reception[];
-    create: (reception: Reception) => Promise<Reception>;
+    create: (
+      reception: Reception,
+      productsFile: File,
+      recipeFile: File
+    ) => Promise<Reception>;
     get: () => Promise<void>;
+    aprove: (reception: Reception) => Promise<void>;
     update: (reception: Reception) => Promise<void>;
     remove: (receptionId: string) => Promise<void>;
   };
   approved: {
     data: Reception[];
-    create: (reception: Reception) => Promise<Reception>;
+    create: (
+      reception: Reception,
+      productsFile: File,
+      recipeFile: File
+    ) => Promise<Reception>;
     get: () => Promise<void>;
     update: (reception: Reception) => Promise<void>;
     remove: (receptionId: string) => Promise<void>;
   };
   history: {
     data: Reception[];
-    create: (reception: Reception) => Promise<Reception>;
+    create: (
+      reception: Reception,
+      productsFile: File,
+      recipeFile: File
+    ) => Promise<Reception>;
     get: () => Promise<void>;
     update: (reception: Reception) => Promise<void>;
     remove: (receptionId: string) => Promise<void>;
@@ -38,8 +51,28 @@ export default function useReceptions(): UseReceptions {
     removeReception,
   } = useReceptionsStore();
 
-  const postReception = async (reception: Reception): Promise<Reception> => {
-    const response = await axios.post("/receptions", reception);
+  const postReception = async (
+    reception: Reception,
+    productsFile: File,
+    recipeFile: File
+  ): Promise<Reception> => {
+    const formData = new FormData();
+
+    // Agrego todos los campos del objeto Reception al form-data
+    Object.entries(reception).forEach(([key, value]) => {
+      formData.append(key, value as any);
+    });
+
+    // Agrego los archivos
+    formData.append("products", productsFile);
+    formData.append("remittance", recipeFile);
+
+    const response = await axios.post("/receptions", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
     return response.data;
   };
 
@@ -47,7 +80,7 @@ export default function useReceptions(): UseReceptions {
     state: ReceptionStatus
   ): Promise<Reception[]> => {
     const response = await axios.get(
-      `/receptions${state ? `&state=${state}` : ""}`
+      `/receptions${state ? `?state=${state}` : ""}`
     );
     return response.data;
   };
@@ -66,10 +99,16 @@ export default function useReceptions(): UseReceptions {
   // Reception operations
   async function createReception(
     reception: Reception,
+    productsFile: File,
+    recipeFile: File,
     key: Keys
   ): Promise<Reception> {
     try {
-      const newReception = await postReception(reception);
+      const newReception = await postReception(
+        reception,
+        productsFile,
+        recipeFile
+      );
       addReception(newReception, key);
       Swal.fire("Created", "Successfully created reception", "success");
       return newReception;
@@ -109,6 +148,23 @@ export default function useReceptions(): UseReceptions {
     }
   }
 
+  async function aprovePending(reception: Reception) {
+    try {
+      const newReception = {
+        ...reception,
+        state: ReceptionStatus.RECEIVED,
+      };
+
+      await updateReceptionAPI(newReception);
+      updateReception(reception, "approved");
+
+      Swal.fire("Updated", "Successfully updated reception", "success");
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Error al aprobar la recepción, try later", "error");
+    }
+  }
+
   async function removeReceptionById(
     receptionId: string,
     key: Keys
@@ -124,26 +180,35 @@ export default function useReceptions(): UseReceptions {
     }
   }
 
-  const createPendings = async (data: Reception) =>
-    createReception(data, "pendings");
+  const createPendings = async (
+    data: Reception,
+    productsFile: File,
+    recipeFile: File
+  ) => createReception(data, productsFile, recipeFile, "pendings");
   const getPendings = async () =>
-    getAllReceptions(ReceptionStatus.COMPLETED, "pendings");
+    getAllReceptions(ReceptionStatus.PENDING, "pendings");
   const updatePendings = async (data: Reception) =>
     updateReceptionById(data, "pendings");
   const removePendings = async (dataId: string) =>
     removeReceptionById(dataId, "pendings");
 
-  const createApproved = async (data: Reception) =>
-    createReception(data, "approved");
+  const createApproved = async (
+    data: Reception,
+    productsFile: File,
+    recipeFile: File
+  ) => createReception(data, productsFile, recipeFile, "approved");
   const getApproved = async () =>
-    getAllReceptions(ReceptionStatus.ANY, "approved");
+    getAllReceptions(ReceptionStatus.RECEIVED, "approved");
   const updateApproved = async (data: Reception) =>
     updateReceptionById(data, "approved");
   const removeApproved = async (dataId: string) =>
     removeReceptionById(dataId, "approved");
 
-  const createHistory = async (data: Reception) =>
-    createReception(data, "history");
+  const createHistory = async (
+    data: Reception,
+    productsFile: File,
+    recipeFile: File
+  ) => createReception(data, productsFile, recipeFile, "history");
   const getHistory = async () =>
     getAllReceptions(ReceptionStatus.COMPLETED, "history");
   const updateHistory = async (data: Reception) =>
@@ -156,6 +221,7 @@ export default function useReceptions(): UseReceptions {
       data: pendings,
       create: createPendings,
       get: getPendings,
+      aprove: aprovePending,
       update: updatePendings,
       remove: removePendings,
     },

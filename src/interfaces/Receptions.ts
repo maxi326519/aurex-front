@@ -5,10 +5,10 @@ export interface Reception {
   id?: string;
   date: Date;
   state: ReceptionStatus;
-  excel: string;
+  sheetFile: string;
   remittance: string;
   products?: Product[];
-  userId?: string;
+  UserId?: string;
   user?: Partial<User>;
 }
 

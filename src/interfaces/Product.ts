@@ -5,9 +5,8 @@ export interface Product {
   ean: string;
   sku: string;
   name: string;
-  description: string;
   price: number;
-  volumeType: number;
+  volumeType: "Chico" | "Mediano" | "Grande";
   weight: number;
   category1: string;
   category2: string;
@@ -41,9 +40,8 @@ export const initProduct = (): Product => ({
   ean: "",
   sku: "",
   name: "",
-  description: "",
   price: 0,
-  volumeType: 0,
+  volumeType: "Chico",
   weight: 0,
   category1: "",
   category2: "",

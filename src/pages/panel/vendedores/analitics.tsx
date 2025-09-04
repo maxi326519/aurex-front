@@ -1,6 +1,3 @@
-import DashboardLayout from "../../../components/Dashboard/SellerDashboard";
-import Table from "../../../components/Dashboard/Table/Table";
-import Button from "../../../components/ui/Button";
 import {
   Card,
   CardContent,
@@ -11,17 +8,16 @@ import {
   Package,
   ShoppingCart,
   DollarSign,
-  TrendingUp,
-  Users,
-  Box,
   Star,
   BarChart3,
   PieChart,
-  Target,
   Calendar,
   Download,
-  Eye,
 } from "lucide-react";
+
+import DashboardLayout from "../../../components/Dashboard/SellerDashboard";
+import Table from "../../../components/Dashboard/Table/Table";
+import Button from "../../../components/ui/Button";
 
 const tableColumns = [
   { header: "ID", key: "id" },

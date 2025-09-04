@@ -2,11 +2,23 @@ import { useState } from "react";
 
 interface Props {
   setFile: (file: File) => void;
+  allowedTypes?: string[]; // Prop para tipos permitidos
 }
 
-export default function DragAndDrop({ setFile }: Props) {
+const extensionToMime: Record<string, string> = {
+  xls: "application/vnd.ms-excel",
+  xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  pdf: "application/pdf",
+  jpg: "image/jpeg",
+  png: "image/png",
+};
+
+export default function DragAndDrop({ setFile, allowedTypes }: Props) {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string>("");
+
+  // Tipos permitidos por defecto
+  const defaultAllowedExtensions = Object.keys(extensionToMime);
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
@@ -38,18 +50,21 @@ export default function DragAndDrop({ setFile }: Props) {
     const file = files[0];
     setError("");
 
-    // Validar que el archivo sea de Excel
-    const allowedTypes = [
-      "application/vnd.ms-excel", // .xls
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
-    ];
+    // Convertir las extensiones permitidas a MIME types
+    const allowedMimes = (allowedTypes || defaultAllowedExtensions).map(
+      (ext) => extensionToMime[ext] || ""
+    );
 
-    if (!allowedTypes.includes(file.type)) {
-      setError("Solo se permiten archivos de Excel (.xls, .xlsx)");
+    if (!allowedMimes.includes(file.type)) {
+      setError("El archivo no tiene un formato permitido.");
       return;
     }
 
     setFile(file);
+  };
+
+  const getAllowedExtensions = () => {
+    return allowedTypes?.join(", ") || defaultAllowedExtensions.join(", ");
   };
 
   return (
@@ -85,7 +100,7 @@ export default function DragAndDrop({ setFile }: Props) {
             <p className="font-medium">
               {isDragging
                 ? "Suelta el archivo aquí"
-                : "Arrastra tu archivo de Excel aquí"}
+                : "Arrastra tu archivo aquí"}
             </p>
             <p className="text-gray-500 text-sm">o</p>
             <label className="cursor-pointer text-blue-600 hover:text-blue-700 font-medium">
@@ -94,13 +109,17 @@ export default function DragAndDrop({ setFile }: Props) {
                 type="file"
                 className="hidden"
                 onChange={handleFileInput}
-                accept=".xls,.xlsx" // Solo acepta archivos de Excel
+                accept={allowedTypes
+                  ?.map((ext) => extensionToMime[ext])
+                  .join(",") || defaultAllowedExtensions
+                  .map((ext) => extensionToMime[ext])
+                  .join(",")}
               />
             </label>
           </div>
 
           <p className="text-gray-500 text-sm mt-2">
-            Formatos soportados: .xls, .xlsx
+            Formatos soportados: {getAllowedExtensions()}
           </p>
         </div>
       </div>

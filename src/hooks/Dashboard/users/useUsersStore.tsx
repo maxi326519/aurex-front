@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { User } from "../../../../interfaces/Users";
+import { User } from "../../../interfaces/Users";
 
 interface UsersState {
   data: User[];
@@ -8,7 +8,7 @@ interface UsersState {
   setUsers: (users: User[]) => void;
   addUser: (user: User) => void;
   updateUser: (user: User) => void;
-  removeUser: (userId: string) => void;
+  removeUser: (userId: string) => void
 }
 
 // Store de Zustand

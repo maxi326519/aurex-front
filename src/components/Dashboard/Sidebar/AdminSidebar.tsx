@@ -13,7 +13,6 @@ import {
   Clock,
   Truck,
   CheckCircle2,
-  Loader,
   History,
   PackageCheck,
 } from "lucide-react";

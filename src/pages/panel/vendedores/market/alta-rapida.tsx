@@ -1,4 +1,3 @@
-import usePosts from "../../../../hooks/Dashboard/posts/usePosts";
 import DashboardLayout from "../../../../components/Dashboard/SellerDashboard";
 import { useState } from "react";
 
@@ -22,7 +21,6 @@ export interface Post {
 }
 
 export default function SellersNewPostPage() {
-  const post = usePosts();
   const [formData, setFormData] = useState<Post>({
     id: "",
     date: new Date(),

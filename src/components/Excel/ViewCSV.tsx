@@ -1,6 +1,6 @@
 import { Product, ProductStatus } from "../../interfaces/Product";
 import { useEffect, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Upload } from "lucide-react";
 import * as XLSX from "xlsx";
 import Swal from "sweetalert2";
 
@@ -65,13 +65,17 @@ const tableColumns = [
 
 interface Props {
   file: File;
+  remito: File | null;
   onSubmit: (data: Product[], reset: boolean) => Promise<void>;
+  onSubmitRemittance: () => void;
   onBack: () => void;
   onClose: () => void;
 }
 
 export default function ImportProducts({
   file,
+  remito,
+  onSubmitRemittance,
   onSubmit,
   onBack,
   onClose,
@@ -80,7 +84,6 @@ export default function ImportProducts({
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
-  const [remito, setRemito] = useState<File | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -162,9 +165,8 @@ export default function ImportProducts({
           ean: String(row[0] || "").trim(), // Columna A: EAN
           sku: String(row[1] || "").trim(), // Columna B: SKU
           name: String(row[2] || "").trim(), // Columna C: Producto
-          description: "", // No hay columna para descripción
           price: Number(row[5] || 0), // Columna F: Valor declarado
-          volumeType: 0, // umber(row[6]), // Columna G: Tipo de volumen
+          volumeType: String(row[6]) as Product["volumeType"], // umber(row[6]), // Columna G: Tipo de volumen
           weight: 0, // No hay columna para peso
           category1: String(row[3] || "").trim(), // Columna D: Categoria 1
           category2: String(row[4] || "").trim(), // Columna E: Categoria 2
@@ -251,33 +253,9 @@ export default function ImportProducts({
             Importando productos, por favor espere...
           </p>
         </div>
-      ) : error ? (
-        <div className="flex flex-col gap-3">
-          <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-            <h3 className="font-semibold mb-2">Error en la importación</h3>
-            <p>{error}</p>
-          </div>
-          <button
-            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
-            onClick={onBack}
-          >
-            Volver
-          </button>
-        </div>
       ) : products.length > 0 ? (
         <div className="space-y-4">
-          <div className="flex gap-4">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 m-auto">
-              <h3 className="font-semibold text-green-800 mb-2">
-                ¡Archivo procesado correctamente!
-              </h3>
-              <p className="text-green-700">
-                Se encontraron <strong>{products.length}</strong> productos para
-                importar.
-              </p>
-            </div>
-          </div>
-          <div className="flex justify-center gap-4 pt-4">
+          <div className="flex justify-center gap-4">
             <button
               className="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
               onClick={onBack}
@@ -285,19 +263,39 @@ export default function ImportProducts({
               Cancelar
             </button>
             {remito ? (
-              <button
-                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
-                onClick={handleSubmit}
-                disabled={loading}
-              >
-                {loading ? "Importando..." : "Confirmar Importación"}
-              </button>
+              <div className="flex gap-4">
+                <button
+                  className="flex items-center gap-2 px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+                  onClick={onSubmitRemittance}
+                >
+                  <Upload size={18} />
+                  <span>Volver a submir remito</span>
+                </button>
+                <button
+                  className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                >
+                  {loading ? "Importando..." : "Confirmar Importación"}
+                </button>
+              </div>
             ) : (
-              <Button type="primary">Submir remito</Button>
+              <Button type="primary" onClick={onSubmitRemittance}>
+                <span>Submir remito</span>
+                <Upload />
+              </Button>
             )}
           </div>
           <Separator />
-
+          <div className="flex flex-col items-center p-4 mt-10 w-full rounded-lg border bg-green-50 border-green-200">
+            <h3 className="font-semibold text-green-800 mb-2">
+              ¡Archivo procesado correctamente!
+            </h3>
+            <p className="text-green-700">
+              Se encontraron <strong>{products.length}</strong> productos para
+              importar.
+            </p>
+          </div>
           <Table data={products} columns={tableColumns} />
         </div>
       ) : (

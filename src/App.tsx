@@ -25,14 +25,14 @@ import SellersPostsPage from "./pages/panel/vendedores/market/publicaciones";
 import SellersNewPostPage from "./pages/panel/vendedores/market/alta-rapida";
 
 import SellersImportsPage from "./pages/panel/vendedores/products/imports";
-import ReceptionsPendingPage from "./pages/panel/admin/recepciones/pendientes";
 
 import ClientsOrdersPage from "./pages/panel/compras";
 
-import "./App.css";
 import ReceptionsApproved from "./pages/panel/admin/recepciones/aprobados";
 import ReceptionsHistory from "./pages/panel/admin/recepciones/historial";
 import ReceptionsPending from "./pages/panel/admin/recepciones/pendientes";
+
+import "./App.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
@@ -73,9 +73,6 @@ function App() {
         <Route path={"/panel/vendedor/tienda/combos"} element={<SellersProductsCombosPage/>}/>
         <Route path={"/panel/vendedor/tienda/alta-rapida"} element={<SellersNewPostPage/>}/>
 
-
-
-        
         <Route path={"/panel/vendedor/ventas/pedidos"} element={<SellerOrdersPage/>}/>
 
         {/* Dashbaord Clients */}

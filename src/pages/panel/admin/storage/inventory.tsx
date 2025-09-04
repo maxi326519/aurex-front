@@ -55,11 +55,6 @@ const tableColumns = [
     key: "storage",
     render: (row: Stock) => row.storage?.name,
   },
-  {
-    header: "Usuario",
-    key: "user",
-    render: (row: Stock) => row.storage?.userName,
-  },
 ];
 
 const filtersConfig: FilterConfig = [
@@ -96,7 +91,7 @@ export default function InventarioPage() {
         totalStock: 10,
         status: ProductStatus.PUBLISHED,
       },
-      storage: { id: "s1", name: "Almacén Central", userName: "Maximiliano" },
+      storage: { id: "s1", name: "Almacén Central" },
     },
     {
       amount: 0,
@@ -115,7 +110,7 @@ export default function InventarioPage() {
         totalStock: 0,
         status: ProductStatus.EMPTY,
       },
-      storage: { id: "s2", name: "Almacén Secundario", userName: "Alberto" },
+      storage: { id: "s2", name: "Almacén Secundario" },
     },
   ]);
 

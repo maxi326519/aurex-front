@@ -89,18 +89,10 @@ export default function SellersNewProductsPage() {
           <Input
             name="volumeType"
             label="Tipo volumen"
-            type="number"
+            type="text"
             value={product.volumeType}
             onChange={handleChangeProduct}
           />
-          <div className="col-span-2">
-            <TextAreaInput
-              name="description"
-              label="Descripción"
-              value={product.description}
-              onChange={handleChangeProduct}
-            />
-          </div>
         </div>
 
         <Separator />
