@@ -33,6 +33,7 @@ import ReceptionsHistory from "./pages/panel/admin/recepciones/historial";
 import ReceptionsPending from "./pages/panel/admin/recepciones/pendientes";
 
 import "./App.css";
+import Register from "./pages/register";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
@@ -44,6 +45,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/busqueda" element={<Search />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registrarse" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
 
         {/* Dashbpoard Admin */}

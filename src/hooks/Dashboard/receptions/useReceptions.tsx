@@ -12,9 +12,9 @@ export interface UseReceptions {
       recipeFile: File
     ) => Promise<Reception>;
     get: () => Promise<void>;
-    aprove: (reception: Reception) => Promise<void>;
     update: (reception: Reception) => Promise<void>;
     remove: (receptionId: string) => Promise<void>;
+    aprove: (reception: Reception) => Promise<void>;
   };
   approved: {
     data: Reception[];
@@ -25,6 +25,7 @@ export interface UseReceptions {
     ) => Promise<Reception>;
     get: () => Promise<void>;
     update: (reception: Reception) => Promise<void>;
+    complete: (reception: Reception) => Promise<void>;
     remove: (receptionId: string) => Promise<void>;
   };
   history: {
@@ -165,6 +166,24 @@ export default function useReceptions(): UseReceptions {
     }
   }
 
+
+  async function completePending(reception: Reception) {
+    try {
+      const newReception = {
+        ...reception,
+        state: ReceptionStatus.COMPLETED,
+      };
+
+      await updateReceptionAPI(newReception);
+      updateReception(reception, "history");
+
+      Swal.fire("Updated", "Successfully updated reception", "success");
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Error al aprobar la recepción, try later", "error");
+    }
+  }
+
   async function removeReceptionById(
     receptionId: string,
     key: Keys
@@ -221,8 +240,8 @@ export default function useReceptions(): UseReceptions {
       data: pendings,
       create: createPendings,
       get: getPendings,
-      aprove: aprovePending,
       update: updatePendings,
+      aprove: aprovePending,
       remove: removePendings,
     },
     approved: {
@@ -230,6 +249,7 @@ export default function useReceptions(): UseReceptions {
       create: createApproved,
       get: getApproved,
       update: updateApproved,
+      complete: completePending,
       remove: removeApproved,
     },
     history: {

@@ -1,3 +1,4 @@
+import { Storage } from "../../../interfaces/Storage";
 import useStorageStore from "./useStorageStore";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -22,22 +23,22 @@ export function useStorage(): UseStorage {
 
   // API functions
   const postStorageAPI = async (storage: Storage): Promise<Storage> => {
-    const response = await axios.post("/storage", storage);
+    const response = await axios.post("/storages", storage);
     return response.data;
   };
 
   const getStorageAPI = async (): Promise<Storage[]> => {
-    const response = await axios.get("/storage");
+    const response = await axios.get("/storages");
     return response.data;
   };
 
   const updateStorageAPI = async (storage: Storage): Promise<Storage> => {
-    await axios.patch("/storage", storage);
+    await axios.patch("/storagse", storage);
     return storage;
   };
 
   const deleteStorageAPI = async (id: string): Promise<void> => {
-    await axios.delete(`/storage/${id}`);
+    await axios.delete(`/storages/${id}`);
   };
 
   async function setStorageItem(storage: Storage): Promise<void> {

@@ -24,8 +24,10 @@ export default function ReceptionsApproved() {
   const [newProducts, setNewProducts] = useState<Product[]>([]);
   const [progress, setProgress] = useState<number>(0);
 
+    /* TODO: Agregar opcion para pdoer realizr ingresos parciales */
+
   useEffect(() => {
-    if (approved.data.length) handleGetData();
+    if (approved.data.length === 0) handleGetData();
   }, []);
 
   const handleGetData = () => {
@@ -48,6 +50,7 @@ export default function ReceptionsApproved() {
     setOpenModal(null);
     setErrors([]);
     setComparedApproved(false);
+    setProgress(0);
   };
 
   const handleCompare = async (file: File | null) => {
@@ -76,10 +79,11 @@ export default function ReceptionsApproved() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (reception: Reception) => {
     newProducts.map((product, index) => {
       products.create(product);
       setProgress((index / 100) * newProducts.length);
+      approved.complete(reception);
     });
   };
 
@@ -216,7 +220,7 @@ export default function ReceptionsApproved() {
               <span className="w-48 text-center">
                 Todos los productos coinciden perfectamente
               </span>
-              <Button type="primary" onClick={handleSubmit}>
+              <Button type="primary" onClick={() => handleSubmit(openModal!)}>
                 Completar
               </Button>
             </div>

@@ -5,7 +5,6 @@ import useProducts from "../../../../hooks/Dashboard/products/useProduct";
 import DashboardLayout from "../../../../components/Dashboard/SellerDashboard";
 import Separator from "../../../../components/Separator";
 import Input from "../../../../components/ui/Inputs/Input";
-import TextAreaInput from "../../../../components/Dashboard/Inputs/TextareaInput";
 import Button from "../../../../components/ui/Button";
 
 type ReactInputEvent = React.ChangeEvent<
@@ -69,14 +68,6 @@ export default function SellersNewProductsPage() {
             value={product.volumeType}
             onChange={handleChangeProduct}
           />
-          <div className="col-span-2">
-            <TextAreaInput
-              name="description"
-              label="Descripción"
-              value={product.description}
-              onChange={handleChangeProduct}
-            />
-          </div>
         </div>
 
         <Separator />

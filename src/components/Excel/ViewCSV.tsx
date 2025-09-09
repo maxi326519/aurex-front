@@ -90,6 +90,11 @@ export default function ImportProducts({
     convertExcelToJson(file);
   }, [file]);
 
+  useEffect(() => {
+    // TODO: manage this error
+    console.log(error);
+  }, [error]);
+
   const convertExcelToJson = (file: File) => {
     const allowedTypes = [
       "application/vnd.ms-excel",

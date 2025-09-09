@@ -1,3 +1,4 @@
+import { Storage } from "../../../interfaces/Storage";
 import { create } from "zustand";
 
 interface StorageState {

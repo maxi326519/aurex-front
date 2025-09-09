@@ -21,7 +21,11 @@ const masVendidos = [...categorias];
 const destacados = [...categorias];
 const ofertas = [...categorias];
 
-const Header = () => {
+interface Props {
+  categories?: boolean;
+}
+
+const Header = ({ categories = true }: Props) => {
   const isLoggedIn = false;
   const userName = "John";
 
@@ -117,38 +121,40 @@ const Header = () => {
       </div>
 
       {/* Categories Navigation */}
-      <nav className="px-4 py-4 bg-secondary">
-        <div className="flex justify-center gap-6">
-          <Select
-            name="categorias"
-            value={search.categoria || ""}
-            label="Categorias"
-            options={categorias}
-            onChange={handleChange}
-          />
-          <Select
-            name="masVendidos"
-            value={search.masVendido || ""}
-            label="Más vendidos"
-            options={masVendidos}
-            onChange={handleChange}
-          />
-          <Select
-            name="destacados"
-            value={search.destacado || ""}
-            label="Destacados"
-            options={destacados}
-            onChange={handleChange}
-          />
-          <Select
-            name="ofertas"
-            value={search.oferta || ""}
-            label="Ofertas"
-            options={ofertas}
-            onChange={handleChange}
-          />
-        </div>
-      </nav>
+      {categories && (
+        <nav className="px-4 py-4 bg-secondary">
+          <div className="flex justify-center gap-6">
+            <Select
+              name="categorias"
+              value={search.categoria || ""}
+              label="Categorias"
+              options={categorias}
+              onChange={handleChange}
+            />
+            <Select
+              name="masVendidos"
+              value={search.masVendido || ""}
+              label="Más vendidos"
+              options={masVendidos}
+              onChange={handleChange}
+            />
+            <Select
+              name="destacados"
+              value={search.destacado || ""}
+              label="Destacados"
+              options={destacados}
+              onChange={handleChange}
+            />
+            <Select
+              name="ofertas"
+              value={search.oferta || ""}
+              label="Ofertas"
+              options={ofertas}
+              onChange={handleChange}
+            />
+          </div>
+        </nav>
+      )}
     </header>
   );
 };

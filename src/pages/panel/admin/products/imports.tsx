@@ -26,6 +26,8 @@ export default function ProductsImportsPage() {
         {file ? (
           <ViewCSV
             file={file}
+            remito={null}
+            onSubmitRemittance={() => {}}
             onSubmit={(data) => handleSubmit(data)}
             onBack={() => setFile(undefined)}
             onClose={handleClose}

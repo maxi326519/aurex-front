@@ -15,7 +15,7 @@ export default function ReceptionsPending() {
   const { pendings } = useReceptions();
 
   useEffect(() => {
-    if (pendings.data.length) handleGetData();
+    if (pendings.data.length === 0) handleGetData();
   }, []);
 
   const handleGetData = () => {

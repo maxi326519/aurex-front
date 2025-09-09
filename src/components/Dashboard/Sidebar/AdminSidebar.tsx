@@ -71,7 +71,7 @@ const sections: SideSection[] = [
           {
             icon: <MapPin size={18} />,
             path: "/panel/admin/almacen/ubicaciones",
-            name: "Gestión de Ubicaciones",
+            name: "Ubicaciones",
           },
           {
             icon: <PackagePlus size={18} />,

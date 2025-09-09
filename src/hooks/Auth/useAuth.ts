@@ -1,5 +1,5 @@
+import { LoginData, User, UserRol } from "../../interfaces/Users";
 import axios, { AxiosError } from "axios";
-import { LoginData, User } from "../../interfaces/Users";
 import { useAuthStore } from "./useAuthStore";
 import { useEffect } from "react";
 
@@ -8,7 +8,12 @@ interface UseAuth {
   token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
-  login: (loginData: LoginData) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    role: UserRol
+  ) => Promise<User | undefined>;
+  login: (loginData: LoginData) => Promise<User | undefined>;
   logout: () => Promise<void>;
   reLogin: () => Promise<void>;
 }
@@ -37,11 +42,31 @@ export const useAuth = (): UseAuth => {
     });
   };
 
-  const login = async (loginData: LoginData): Promise<void> => {
+  const register = async (
+    email: string,
+    password: string,
+    role: UserRol
+  ): Promise<User | undefined> => {
+    try {
+      const response = await axios.post("/sesion/signup", {
+        email,
+        password,
+        role,
+      });
+      console.log(response);
+      if (!response.data?.user) throw new Error("Error to create user");
+
+      return response.data.user;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const login = async (loginData: LoginData): Promise<User | undefined> => {
     setLoading(true);
     try {
       // Login
-      const response = await axios.post("/login", loginData);
+      const response = await axios.post("/sesion/login", loginData);
 
       // Get TOKEN and user
       const userData = response.data.user;
@@ -59,6 +84,8 @@ export const useAuth = (): UseAuth => {
       // Update store
       setUser({ ...userData, token });
       setToken(token);
+
+      return userData;
     } catch (error) {
       console.error("Login error:", error);
       if (error instanceof AxiosError) {
@@ -106,7 +133,7 @@ export const useAuth = (): UseAuth => {
       configureAxiosInterceptor(token);
 
       // Login with token
-      const response = await axios.post("/login/token");
+      const response = await axios.post("/sesion/login/token");
 
       // Update store
       setUser({ ...response.data, token });
@@ -133,6 +160,7 @@ export const useAuth = (): UseAuth => {
     token,
     isAuthenticated,
     loading,
+    register,
     login,
     logout,
     reLogin,

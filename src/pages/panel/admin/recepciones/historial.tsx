@@ -14,7 +14,7 @@ export default function ReceptionsHistory() {
   const { history } = useReceptions();
 
   useEffect(() => {
-    if (history.data.length) handleGetData();
+    if (history.data.length === 0) handleGetData();
   }, []);
 
   const handleGetData = () => {
@@ -75,6 +75,7 @@ const tableColumns = (handleGetUser: (row: Reception) => User | undefined) => {
       header: "Tipo",
       key: "type",
     },
+    /* TODO: Mostrar ingreso parcial */
     {
       header: "Excel",
       key: "",
@@ -82,3 +83,4 @@ const tableColumns = (handleGetUser: (row: Reception) => User | undefined) => {
     },
   ];
 };
+

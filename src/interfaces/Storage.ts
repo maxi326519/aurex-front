@@ -1,20 +1,18 @@
 export interface Storage {
   id?: string;
-  name: string;
-  height: number;
-  width: number;
-  large: number;
+  rag: string;
+  site: string;
+  positions: number;
   currentCapacity: number;
-  estimatedCapacity: number;
-  allowedQuantity: number;
+  totalCapacity: number;
+  disabled: boolean;
 }
 
 export const initStorage = (): Storage => ({
-  name: "",
-  height: 0,
-  width: 0,
-  large: 0,
+  rag: "",
+  site: "",
+  positions: 0,
   currentCapacity: 0,
-  estimatedCapacity: 0,
-  allowedQuantity: 0,
+  totalCapacity: 0,
+  disabled: false,
 });

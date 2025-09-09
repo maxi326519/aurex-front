@@ -1,20 +1,21 @@
+import { LoginData, User, UserRol } from "../interfaces/Users";
 import { useNavigate } from "react-router-dom";
-import { LoginData } from "../interfaces/Users";
 import { useState } from "react";
 import { useAuth } from "../hooks/Auth/useAuth";
+import Swal from "sweetalert2";
 
 import Header from "../components/Marketplace/Header";
 import Footer from "../components/Marketplace/Footer";
 import Input from "../components/Dashboard/Inputs/Input";
 import Button from "../components/ui/Button";
-import Swal from "sweetalert2";
 
 export default function Login() {
   const navigate = useNavigate();
   const auth = useAuth();
   const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  function handleLogin(data: LoginData, cb: () => void) {
+  function handleLogin(data: LoginData, cb: (user: User | undefined) => void) {
     return auth
       .login(data)
       .then(cb)
@@ -28,10 +29,15 @@ export default function Login() {
       });
   }
 
+  function handleSetLogin() {
+    handleLogin({ email, password }, (user: User | undefined) => {
+      if (user?.rol === UserRol.CLIENT) navigate("/panel/compras");
+      if (user?.rol === UserRol.SELLER) navigate("/panel/vendedor/analiticas");
+    });
+  }
+
   function handleRegister() {
-    handleLogin({ email: "admin@mipanel.online", password: "123qwe" }, () =>
-      navigate("/panel/admin/analiticas")
-    );
+    navigate("/registrarse");
   }
 
   function handleSetClient() {
@@ -46,27 +52,74 @@ export default function Login() {
     );
   }
 
+  function handleSetAdmin() {
+    handleLogin({ email: "admin@mipanel.online", password: "123qwe" }, () =>
+      navigate("/panel/admin/analiticas")
+    );
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="grow flex flex-col justify-center items-center gap-4">
-        <Input
-          name="email"
-          label="Correo"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <div className="flex gap-4">
-          <Button type="primary" onClick={() => handleSetClient()}>
-            Comprar
+      <div className="grow flex flex-col justify-center items-center gap-4 py-10">
+        <div className="flex flex-col gap-2 max-w-[300px] w-full">
+          <p className="text-center">Inicio sesión con tu cuenta</p>
+          <Input
+            name="email"
+            label="Correo"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            name="password"
+            label="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            type="primary"
+            className="w-full"
+            onClick={() => handleSetLogin()}
+          >
+            Iniciar sesión
           </Button>
-          <Button type="primary" onClick={() => handleSetSeller()}>
-            Vender
-          </Button>
-          <Button type="secondary" onClick={() => handleRegister()}>
-            Registrarme
+          <Button
+            type="primary"
+            variant="outline"
+            className="w-full"
+            onClick={() => handleRegister()}
+          >
+            Registrarse
           </Button>
         </div>
+        {import.meta.env.VITE_ENVIRONMENT === "development" && (
+          <div className="flex flex-col gap-2 p-4 rounded-md border border-gray-200">
+            <p className="text-center">Inicio Rapido</p>
+            <div className="flex gap-4">
+              <Button
+                type="primary"
+                variant="outline"
+                onClick={() => handleSetClient()}
+              >
+                Comprador
+              </Button>
+              <Button
+                type="primary"
+                variant="outline"
+                onClick={() => handleSetSeller()}
+              >
+                Venderor
+              </Button>
+              <Button
+                type="primary"
+                variant="outline"
+                onClick={() => handleSetAdmin()}
+              >
+                Administrador
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </div>

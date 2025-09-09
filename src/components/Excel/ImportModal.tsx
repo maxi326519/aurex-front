@@ -28,6 +28,8 @@ export default function ImportModal({ onSubmit, onClose }: Props) {
           {file ? (
             <ViewCSV
               file={file}
+              remito={null}
+              onSubmitRemittance={() => {}}
               onSubmit={(data) => onSubmit(data)}
               onBack={() => setFile(undefined)}
               onClose={onClose}
