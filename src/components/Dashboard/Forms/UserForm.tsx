@@ -1,6 +1,7 @@
 import { initUser, User, UserRol, UserStatus } from "../../../interfaces/Users";
 import { useEffect, useState } from "react";
 import { ReactInput } from "../../../interfaces/Types";
+
 import Input from "../Inputs/Input";
 import Button from "../../ui/Button";
 import SelectInput from "../Inputs/SelectInput";
@@ -84,7 +85,7 @@ export default function UserForm({ data, onClose, onSubmit }: Props) {
       isValid = false;
     }
 
-/*     if (!user.photo) {
+    /*     if (!user.photo) {
       newError.photo = "La foto es requerida";
       isValid = false;
     } */
@@ -133,7 +134,10 @@ export default function UserForm({ data, onClose, onSubmit }: Props) {
               />
             </div>
           )}
-          <input name="photo" type="file" onChange={handleImageChange} />
+          <label className="flex flex-col gap-2">
+            Cargar imagen de portada
+            <input name="photo" type="file" onChange={handleImageChange} />
+          </label>
           <Input
             name="name"
             value={user.name}

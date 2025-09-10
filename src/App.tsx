@@ -34,6 +34,8 @@ import ReceptionsPending from "./pages/panel/admin/recepciones/pendientes";
 
 import "./App.css";
 import Register from "./pages/register";
+import CompradorRegister from "./pages/registro/comprador";
+import VendedorRegister from "./pages/registro/vendedor";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
@@ -46,6 +48,8 @@ function App() {
         <Route path="/busqueda" element={<Search />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registrarse" element={<Register />} />
+        <Route path="/registro/comprador" element={<CompradorRegister />} />
+        <Route path="/registro/vendedor" element={<VendedorRegister />} />
         <Route path="/cart" element={<Cart />} />
 
         {/* Dashbpoard Admin */}

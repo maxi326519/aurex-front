@@ -5,6 +5,7 @@ interface Props {
   style?: React.CSSProperties;
   className?: string;
   submit?: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -15,6 +16,7 @@ export default function Button({
   className,
   style,
   submit,
+  disabled = false,
   onClick,
 }: Props) {
   const baseStyles = "flex justify-center gap-4 px-4 py-2 rounded-lg border";
@@ -34,9 +36,10 @@ export default function Button({
       type={submit ? "submit" : "button"}
       className={`${baseStyles} ${
         variant === "outline" ? outlineStyles : solidStyles
-      } ${className}`}
+      } ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
       style={style}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

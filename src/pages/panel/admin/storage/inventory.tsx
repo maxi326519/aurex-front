@@ -53,7 +53,7 @@ const tableColumns = [
   {
     header: "Almacén",
     key: "storage",
-    render: (row: Stock) => row.storage?.name,
+    render: (row: Stock) => row.storage?.rag + "/" + row.storage?.site,
   },
 ];
 
@@ -91,7 +91,7 @@ export default function InventarioPage() {
         totalStock: 10,
         status: ProductStatus.PUBLISHED,
       },
-      storage: { id: "s1", name: "Almacén Central" },
+      storage: { id: "s1", rag: "RA", site: "A1" },
     },
     {
       amount: 0,
@@ -110,7 +110,7 @@ export default function InventarioPage() {
         totalStock: 0,
         status: ProductStatus.EMPTY,
       },
-      storage: { id: "s2", name: "Almacén Secundario" },
+      storage: { id: "s2", rag: "RA", site: "A2" },
     },
   ]);
 

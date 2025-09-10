@@ -1,4 +1,11 @@
-import { LoginData, User, UserRol } from "../../interfaces/Users";
+import { 
+  LoginData, 
+  User, 
+  UserRol, 
+  CompradorRegistrationData, 
+  VendedorRegistrationData,
+  CompleteUserRegistration 
+} from "../../interfaces/Users";
 import axios, { AxiosError } from "axios";
 import { useAuthStore } from "./useAuthStore";
 import { useEffect } from "react";
@@ -13,6 +20,12 @@ interface UseAuth {
     password: string,
     role: UserRol
   ) => Promise<User | undefined>;
+  completeCompradorRegistration: (
+    registrationData: CompradorRegistrationData
+  ) => Promise<User | undefined>;
+  completeVendedorRegistration: (
+    registrationData: VendedorRegistrationData
+  ) => Promise<CompleteUserRegistration | undefined>;
   login: (loginData: LoginData) => Promise<User | undefined>;
   logout: () => Promise<void>;
   reLogin: () => Promise<void>;
@@ -25,6 +38,7 @@ export const useAuth = (): UseAuth => {
     isAuthenticated,
     loading,
     setUser,
+    setBusiness,
     setToken,
     setLoading,
     logout: logoutStore,
@@ -56,9 +70,88 @@ export const useAuth = (): UseAuth => {
       console.log(response);
       if (!response.data?.user) throw new Error("Error to create user");
 
+      await login({ email, password });
+
       return response.data.user;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const completeCompradorRegistration = async (
+    registrationData: CompradorRegistrationData
+  ): Promise<User | undefined> => {
+    setLoading(true);
+    try {
+      const response = await axios.put("/sesion/complete-registration", {
+        ...registrationData,
+        rol: UserRol.CLIENT,
+      });
+
+      if (!response.data?.user) throw new Error("Error al completar registro");
+
+      // Actualizar el usuario en el store
+      setUser({ ...response.data.user, token });
+      
+      return response.data.user;
+    } catch (error) {
+      console.error("Error al completar registro de comprador:", error);
+      if (error instanceof AxiosError) {
+        throw new Error(
+          error?.response?.data?.error || error.message || "Error al completar registro"
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const completeVendedorRegistration = async (
+    registrationData: VendedorRegistrationData
+  ): Promise<CompleteUserRegistration | undefined> => {
+    setLoading(true);
+    try {
+      const { businessName, businessType, businessDescription, taxId, bankAccount, ...userData } = registrationData;
+      
+      // Crear el negocio
+      const businessData = {
+        businessName,
+        businessType,
+        businessDescription,
+        address: userData.address,
+        city: userData.city,
+        state: userData.state,
+        zipCode: userData.zipCode,
+        taxId,
+        bankAccount,
+      };
+
+      const response = await axios.put("/sesion/complete-registration", {
+        user: {
+          ...userData,
+          rol: UserRol.SELLER,
+        },
+        business: businessData,
+      });
+
+      if (!response.data?.user) throw new Error("Error al completar registro");
+
+      // Actualizar el usuario y negocio en el store
+      setUser({ ...response.data.user, token });
+      if (response.data.business) {
+        setBusiness(response.data.business);
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error al completar registro de vendedor:", error);
+      if (error instanceof AxiosError) {
+        throw new Error(
+          error?.response?.data?.error || error.message || "Error al completar registro"
+        );
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -161,6 +254,8 @@ export const useAuth = (): UseAuth => {
     isAuthenticated,
     loading,
     register,
+    completeCompradorRegistration,
+    completeVendedorRegistration,
     login,
     logout,
     reLogin,

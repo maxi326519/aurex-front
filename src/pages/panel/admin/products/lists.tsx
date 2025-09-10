@@ -44,6 +44,8 @@ const tableColumns = (
     render: (row: Product) => (
       <div className="flex items-center gap-2">
         <button
+          title="Ver stock"
+          aria-label="Ver stock"
           onClick={() => handleViewStock(row)}
           className="p-1 rounded-full border border-gray-300 hover:bg-gray-100 transition"
         >
@@ -88,12 +90,14 @@ const tableColumns = (
     render: (row: Product) => (
       <div className="flex gap-2">
         <button
+          title="Editar"
           onClick={() => handleEdit(row)}
           className="p-2 rounded-full border border-gray-300 hover:bg-gray-100 transition"
         >
           <Pencil className="h-4 w-4 text-gray-600" />
         </button>
         <button
+          title="Eliminar"
           onClick={() => handleDelete(row)}
           className="p-2 rounded-full border border-red-300 hover:bg-red-100 transition"
         >
@@ -160,7 +164,11 @@ export default function ProductsListPage() {
                 {
                   header: "Ubicación",
                   key: "location",
-                  render: (row: Stock) => <span>{row.storage?.name}</span>,
+                  render: (row: Stock) => (
+                    <span>
+                      {row.storage?.rag}/{row.storage?.site}
+                    </span>
+                  ),
                 },
               ]}
             />

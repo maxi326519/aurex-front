@@ -4,7 +4,6 @@ import { ReactInput } from "../../../interfaces/Types";
 
 import Input from "../Inputs/Input";
 import Button from "../../ui/Button";
-import SelectInput from "../Inputs/SelectInput";
 
 interface Props {
   data?: Storage;
@@ -45,19 +44,6 @@ export default function StorageForm({ data, onClose, onSubmit }: Props) {
     }
   }
 
-  function handleSelectDisabled(value: string) {
-    const parsed = value === "true";
-    setStorage((prev) => ({ ...prev, disabled: parsed }));
-
-    if (error.disabled) {
-      setError((prev) => {
-        const newError = { ...prev };
-        delete newError.disabled;
-        return newError;
-      });
-    }
-  }
-
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (handleValidations()) {
@@ -70,35 +56,24 @@ export default function StorageForm({ data, onClose, onSubmit }: Props) {
     const newError: Record<string, string> = {};
     let isValid = true;
 
-    if (!storage.rag.trim()) {
-      newError.rag = "Este campo es requerido";
-      isValid = false;
-    }
-
-    if (!storage.site.trim()) {
-      newError.site = "Este campo es requerido";
-      isValid = false;
-    }
-
-    if (storage.positions <= 0) {
-      newError.positions = "Debe ser mayor a 0";
-      isValid = false;
-    }
-
-    if (storage.totalCapacity <= 0) {
-      newError.totalCapacity = "Debe ser mayor a 0";
-      isValid = false;
-    }
-
-    if (storage.currentCapacity < 0) {
-      newError.currentCapacity = "No puede ser negativo";
-      isValid = false;
-    } else if (storage.currentCapacity > storage.totalCapacity) {
-      newError.currentCapacity =
-        "La capacidad actual no puede superar la total";
-      isValid = false;
-    }
-
+    [
+      { key: "rag", value: !storage.rag.trim() },
+      { key: "site", value: !storage.site.trim() },
+      { key: "positions", value: storage.positions <= 0 },
+      { key: "totalCapacity", value: storage.totalCapacity <= 0 },
+      {
+        key: "currentCapacity",
+        value:
+          storage.currentCapacity < 0 ||
+          storage.currentCapacity > storage.totalCapacity,
+      },
+    ].map(({ key, value }) => {
+      if (value) {
+        newError[key] = "Este campo es requerido";
+        isValid = false;
+      }
+    });
+    
     setError(newError);
     return isValid;
   }

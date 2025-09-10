@@ -33,6 +33,7 @@ export default function Login() {
     handleLogin({ email, password }, (user: User | undefined) => {
       if (user?.rol === UserRol.CLIENT) navigate("/panel/compras");
       if (user?.rol === UserRol.SELLER) navigate("/panel/vendedor/analiticas");
+      if (user?.rol === UserRol.ADMIN) navigate("/panel/admin/analiticas");
     });
   }
 

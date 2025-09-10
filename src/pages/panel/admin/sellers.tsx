@@ -41,12 +41,18 @@ const tableColumns = (
     render: (row: User) => (
       <div className="flex gap-2">
         <button
+          type="button"
+          title="Editar"
+          aria-label="Editar"
           onClick={() => handleEdit(row)}
           className="p-2 rounded-full border border-gray-300 hover:bg-gray-100 transition"
         >
           <Pencil className="h-4 w-4 text-gray-600" />
         </button>
         <button
+          type="button"
+          title="Eliminar"
+          aria-label="Eliminar"
           onClick={() => handleDelete(row)}
           className="p-2 rounded-full border border-red-300 hover:bg-red-100 transition"
         >

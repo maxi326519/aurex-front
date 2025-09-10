@@ -1,13 +1,15 @@
 import { persist } from "zustand/middleware";
 import { create } from "zustand";
-import { User } from "../../interfaces/Users";
+import { User, Business } from "../../interfaces/Users";
 
 interface AuthState {
   user: User | null;
+  business: Business | null;
   token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
   setUser: (user: User | null) => void;
+  setBusiness: (business: Business | null) => void;
   setToken: (token: string | null) => void;
   setLoading: (loading: boolean) => void;
   logout: () => void;
@@ -17,6 +19,7 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
+      business: null,
       token: null,
       isAuthenticated: false,
       loading: false,
@@ -25,11 +28,13 @@ export const useAuthStore = create<AuthState>()(
           user,
           isAuthenticated: !!user,
         }),
+      setBusiness: (business) => set({ business }),
       setToken: (token) => set({ token }),
       setLoading: (loading) => set({ loading }),
       logout: () =>
         set({
           user: null,
+          business: null,
           token: null,
           isAuthenticated: false,
         }),
@@ -39,6 +44,7 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         token: state.token,
         user: state.user,
+        business: state.business,
       }),
     }
   )
